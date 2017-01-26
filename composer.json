@@ -1,0 +1,12 @@
+{
+    "name": "pxgamer/phphgadmin",
+    "description": "An updated version of the original PhpHgAdmin by Josh Carrier.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "PXgamer",
+            "email": "owzie123@gmail.com"
+        }
+    ],
+    "require": {}
+}
