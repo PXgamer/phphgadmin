@@ -1,17 +1,16 @@
 <?php
 
-class HgDir extends CI_Controller
+class hgdir extends CI_Controller
 {
-
     private $ofl_lock_hgwebconf;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->helper('hg_directory');
     }
 
-    function index()
+    public function index()
     {
         // retrieve the latest OF lock for hgweb
         $this->ofl_lock_hgwebconf = $this->session->flashdata('ofl_hgwebconf');
@@ -44,7 +43,7 @@ class HgDir extends CI_Controller
         $this->load->view('include/template', ['view' => $view]);
     }
 
-    function create()
+    public function create()
     {
         $r_name = $this->input->post('form_create_name');
         $this->form_validation->set_rules('form_create_name', 'form_create_name',
@@ -71,32 +70,32 @@ class HgDir extends CI_Controller
 
                 switch ($action_status) {
                     case HGPHP_OK:
-                        $this->load->vars(array('user_msg' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_create_success')));
+                        $this->load->vars(array('user_msg' => $r_name.': '.lang('hgphp_msg_hgwebconf_create_success')));
                         break;
                     case HGPHP_ERR_PERM_USR:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_create_err_permuser')));
+                        $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_create_err_permuser')));
                         break;
                     case HGPHP_ERR_PERM_SYS_REPODIR:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_create_err_permsys')));
+                        $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_create_err_permsys')));
                         break;
                     case -100:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . '" RESTORE UNSUPPORTED.'));
+                        $this->load->vars(array('user_err' => $r_name.': '.'" RESTORE UNSUPPORTED.'));
                         break;
                     case HGPHP_ERR_FS_PREEXISTS:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_create_err_preexists')));
+                        $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_create_err_preexists')));
                         break;
                     case OFL_ERR_LOCKING:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_create_err_locking') . ' <a href="' . site_url('/hgdir') . '" class="ui-state-default ui-corner-all dialog_link"><span class="ui-icon"></span>' . lang('hgphp_action_reload') . '</a>'));
+                        $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_create_err_locking').' <a href="'.site_url('/hgdir').'" class="ui-state-default ui-corner-all dialog_link"><span class="ui-icon"></span>'.lang('hgphp_action_reload').'</a>'));
                         break;
                     default:
-                        $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_unknown_err') . $action_status));
+                        $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_unknown_err').$action_status));
                         break;
                 }
             }
         }
     }
 
-    function delete()
+    public function delete()
     {
         $r_name = $this->input->post('form_delete_name');
         $this->form_validation->set_rules('form_delete_name', 'form_delete_name', 'required');
@@ -110,22 +109,22 @@ class HgDir extends CI_Controller
 
             switch ($action_status) {
                 case HGPHP_OK:
-                    $this->load->vars(array('user_msg' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_delete_success')));
+                    $this->load->vars(array('user_msg' => $r_name.': '.lang('hgphp_msg_hgwebconf_delete_success')));
                     break;
                 case HGPHP_ERR_PERM_USR:
-                    $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_delete_err_permuser')));
+                    $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_delete_err_permuser')));
                     break;
                 case HGPHP_ERR_PERM_SYS_REPODIR:
-                    $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_delete_err_permsys')));
+                    $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_delete_err_permsys')));
                     break;
                 case HGPHP_ERR_FS_PREEXISTS:
-                    $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_delete_err_preexists')));
+                    $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_delete_err_preexists')));
                     break;
                 case OFL_ERR_LOCKING:
-                    $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_hgwebconf_delete_err_locking') . ' <a href="' . site_url('/hgdir') . '" class="ui-state-default ui-corner-all dialog_link"><span class="ui-icon"></span>' . lang('hgphp_action_reload') . '</a>'));
+                    $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_hgwebconf_delete_err_locking').' <a href="'.site_url('/hgdir').'" class="ui-state-default ui-corner-all dialog_link"><span class="ui-icon"></span>'.lang('hgphp_action_reload').'</a>'));
                     break;
                 default:
-                    $this->load->vars(array('user_err' => $r_name . ': ' . lang('hgphp_msg_unknown_err') . $action_status));
+                    $this->load->vars(array('user_err' => $r_name.': '.lang('hgphp_msg_unknown_err').$action_status));
                     break;
             }
         }

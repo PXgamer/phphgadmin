@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse" id="nb-top">
             <ul class="nav navbar-nav">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="/checkinstall/">Check Install</a></li>
+                <li><a href="<?php echo base_url(); ?>checkinstall/">Check Install</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a><?=HGPHP_VERSION?></a></li>

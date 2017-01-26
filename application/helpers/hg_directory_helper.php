@@ -1,16 +1,14 @@
 <?php
-$_lsdir;
-$_lsdir_iter;
-$_lsdir_iter_count;
+
 function have_repos()
 {
     global $_lsdir, $_lsdir_iter, $_lsdir_iter_count;
 
     if ($_lsdir == null) {
-        $ci =& get_instance();
+        $ci = &get_instance();
         $dirs = $ci->phphgadmin->lsdir();
         // order
-        uksort($dirs, "strnatcasecmp");
+        uksort($dirs, 'strnatcasecmp');
         $_lsdir = array_values($dirs);
         $_lsdir_iter_count = 0;
     }
@@ -42,11 +40,13 @@ function the_repo()
 function repo_name()
 {
     global $_lsdir_iter;
+
     return $_lsdir_iter['name'];
 }
 
 function repo_status()
 {
     global $_lsdir_iter;
+
     return $_lsdir_iter['status'];
 }

@@ -1,10 +1,10 @@
-<table class="bigtable" style="border-bottom: 0px">
+<table class="table">
     <tr>
         <td colspan="4">
             <p><a href="#" id="dialog_link_create" class="ui-state-default ui-corner-all dialog_link"><span
-                            class="ui-icon ui-icon-newwin"></span><?php print lang('hgphp_action_create'); ?></a>
+                            class="ui-icon ui-icon-newwin"></span><?php echo lang('hgphp_action_create'); ?></a>
                 <a href="#" id="dialog_link_delete" class="ui-state-default ui-corner-all dialog_link"><span
-                            class="ui-icon ui-icon-newwin"></span><?php print lang('hgphp_action_delete'); ?></a></p>
+                            class="ui-icon ui-icon-newwin"></span><?php echo lang('hgphp_action_delete'); ?></a></p>
         </td>
     </tr>
     <tr>
@@ -21,7 +21,7 @@
                 <input type="checkbox" disabled="disabled"/>
             </td>
             <td>
-                <a href="<?php echo site_url('hgrepo/manage/' . repo_name()); ?>"><?php echo htmlentities(repo_name()); ?></a>
+                <a href="<?php echo site_url('hgrepo/manage/'.repo_name()); ?>"><?php echo htmlentities(repo_name()); ?></a>
             </td>
             <td>
                 <?php if (repo_status() == HGPHP_REPO_STATUS_ENABLED): echo lang('hgphp_repostatus_enabled'); ?>
@@ -31,7 +31,7 @@
             </td>
             <td>
                 <?php if (repo_status() == HGPHP_REPO_STATUS_ENABLED): ?>
-                    <a href="<?php echo site_url('hgrepo/browse/' . repo_name()); ?>"
+                    <a href="<?php echo site_url('hgrepo/browse/'.repo_name()); ?>"
                        class="ui-state-default ui-corner-all dialog_link"><span
                                 class="ui-icon"></span><?php echo lang('hgphp_action_browse'); ?></a>
                 <?php endif; ?>
@@ -48,7 +48,7 @@
     </tr>
 </table>
 
-<!-- ui-dialog -->
+<?php /*
 <div id="dialog_create" class="dialog" title="<?php echo lang('hgphp_action_create'); ?>">
     <form action="<?php echo site_url('hgdir'); ?>" method="post" id="form_create" name="form_create">
         <table style="width: 100%">
@@ -64,7 +64,7 @@
         </table>
     </form>
 </div>
-<div id="dialog_delete" class="dialog" title="<?php echo lang('hgphp_action_delete'); ?>">
+<div id="dialog_delete" title="<?php echo lang('hgphp_action_delete'); ?>">
     <form action="<?php echo site_url('hgdir'); ?>" method="post" id="form_delete" name="form_delete">
         <table style="width: 100%">
             <tr>
@@ -84,3 +84,4 @@
         </table>
     </form>
 </div>
+ */?>

@@ -1,38 +1,40 @@
 <?php
 
-class HgRepo extends CI_Controller
+class hgrepo extends CI_Controller
 {
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->helper('hg_repo');
         $this->load->library('iniparser');
     }
 
-    function browse()
+    public function browse()
     {
         $repositoryName = rawurldecode($this->uri->segment(3, 0));
 
         if ($repositoryName == false || preg_match('/^([a-z0-9\-_ ])+$/i', $repositoryName) != 1) {
             $this->load->helper('url');
             redirect('/hgdir');
+
             return;
         }
 
         $this->load->vars(array('title' => $repositoryName . '@' . current_profile() . ' | ' . HGPHP_NAME));
         $this->load->vars(array('pagetype' => 'browser'));
 
-        $this->render_view();
+        $view = $this->load->view('index', [], true);
+        $this->load->view('include/template', ['view' => $view]);
     }
 
-    function manage()
+    public function manage()
     {
-        $repositoryName = rawurldecode($this->uri->segment(3, 0));
+        $repositoryName = rawurldecode(preg_split('/manage\//', $this->uri->uri_string())[1]);
 
-        if ($repositoryName == false || preg_match('/^([a-z0-9\-_ ])+$/i', $repositoryName) != 1) {
+        if ($repositoryName == false || preg_match('/^([a-z0-9:\/\-_ ])+$/i', $repositoryName) != 1) {
             $this->load->helper('url');
             redirect('/hgdir');
+
             return;
         }
 
@@ -86,29 +88,29 @@ class HgRepo extends CI_Controller
             }
         }
 
-        $this->load->vars(array('title' => $repositoryName . '@' . current_profile() . ' | ' . HGPHP_NAME));
+        $title = $repositoryName . '@default | ' . HGPHP_NAME;
 
-        $this->phphgadmin->start_tx($dummy = '', $ofl_lock_hgrc);
+        $this->load->vars(['title' => $title]);
+
         $hgrc = $this->phphgadmin->stat_repository($repositoryName);
-        $this->phphgadmin->end_tx();
 
         if (is_integer($hgrc) && $save_status === true) {
             switch ($hgrc) {
                 case OFL_ERR_NOTEXISTS_OR_PERM:
-                    $this->load->vars(array('user_err' => lang('hgphp_msg_hgrc_read_err')));
+                    $this->load->vars(array('user_err' => 'READ ERROR'));
                     break;
                 case HGPHP_ERR_PERM_USR:
-                    $this->load->vars(array('user_err' => lang('hgphp_msg_hgwebconf_create_err_permuser')));
+                    $this->load->vars(array('user_err' => 'NO PERMISSIONS'));
                     break;
                 default:
-                    $this->load->vars(array('user_err' => lang('hgphp_msg_unknown_err') . $hgrc));
+                    $this->load->vars(array('user_err' => 'UNKNOWN ERROR'));
                     break;
             }
         }
 
         // just a reminder, only when we're not pushing a successful save message
         if ($valid && ($save_status != HGPHP_OK)) {
-//			$this->template->inject_partial('user_msg', lang('hgphp_msg_hgrc_save_err_validation').'-_:/`@#%* +]\\\',.');
+            //			$this->template->inject_partial('user_msg', lang('hgphp_msg_hgrc_save_err_validation').'-_:/`@#%* +]\\\',.');
             $hgrc_form = array();
         }
 
@@ -117,15 +119,15 @@ class HgRepo extends CI_Controller
         $this->load->vars(array(
             'pagetype' => 'config',
             'hgrc_bools_arr' => $this->config->item('hgrc_bools_arr'),
-            'hgrc_form' => $hgrc_form
+            'hgrc_form' => $hgrc_form,
         ));
 
-        $this->render_view();
+        $view = $this->load->view('index', [], true);
+        $this->load->view('include/template', ['view' => $view]);
     }
 
-    function index()
+    public function index()
     {
         $this->manage();
     }
-
 }

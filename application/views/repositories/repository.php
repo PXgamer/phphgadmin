@@ -1,20 +1,25 @@
-<table class="bigtable" style="border-bottom: 0">
-    <form action="<?php echo current_url(); ?>" method="post" id="form_hgrc" name="form_hgrc">
-        <input type="hidden" name="form_action" id="form_action" value=""/>
+<form action="<?php echo current_url(); ?>" method="post" id="form_hgrc" name="form_hgrc">
+    <input type="hidden" name="form_action" id="form_action" value=""/>
+    <table class="table">
         <tr>
-            <td colspan="4" align="right">
-                <p>
+            <td colspan="4">
+                <p class="pull-right">
                     <a href="<?php echo site_url('hgrepo/browse/' . the_name()); ?>"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon ui-icon-newwin"></span><?php echo lang('hgphp_action_browse'); ?></a>
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-link"></span> Browse
+                    </a>
                     <a href="<?php echo site_url('hgdir'); ?>" id="dialog_link_cancel"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_cancel'); ?></a>
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-times"></span> Cancel
+                    </a>
                     <a href="<?php echo site_url('hgrepo/manage/' . the_name()); ?>" id="dialog_link_reset"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_reset'); ?></a>
-                    <a href="#" id="dialog_link_save" class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_save'); ?></a>
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-trash"></span> Reset
+                    </a>
+                    <a href="#" id="dialog_link_save"
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-save"></span> Save
+                    </a>
                 </p>
             </td>
         </tr>
@@ -25,22 +30,29 @@
             if (!empty($hgrc_form) && isset($hgrc_form[$section_name]) && isset($hgrc_form[$section_name][$key_name])) {
                 return $hgrc_form[$section_name][$key_name];
             }
+
             return $current_value;
         }
 
         ?>
 
-        <?php while (has_sections()): the_section(); ?>
+        <?php while (has_sections()) {
+            the_section(); ?>
             <tr>
-                <th><?php echo htmlentities(section_name()) ?></th>
+                <th><?= section_name() ?></th>
                 <th></th>
-                <th><a href='<?php echo lang('hgphp_doclink_hgrc') . section_name() ?>'
-                       target="_blank"><?php echo lang('hgphp_title_help'); ?></a></th>
+                <th>
+                    <a href="<?= section_name() ?>"
+                       target="_blank" class="btn btn-info">
+                        <span class="fa fa-fw fa-info"></span>
+                    </a>
+                </th>
                 <th></th>
             </tr>
 
             <?php $parity = 0;
-            while (has_items()): the_item(); ?>
+            while (has_items()) {
+                the_item(); ?>
                 <tr class="parity<?php echo $parity;
                 $parity = ($parity + 1) % 2; ?>">
                     <td style="vertical-align:middle"><?php echo htmlentities(item_name()); ?></td>
@@ -73,29 +85,35 @@
                                class="ui-state-default ui-corner-all">&nbsp;&nbsp;?&nbsp;&nbsp;</a>
                         <?php endif; ?>
                     </td>
-                    </td>
                     <td style="vertical-align:middle;width:40%"><?php echo htmlentities(item_current_value()); ?></td>
                 </tr>
-            <?php endwhile; endwhile; ?>
+            <?php }
+        } ?>
 
         <tr>
-            <td colspan="4" align="right">
-                <p>
+            <td colspan="4">
+                <p class="pull-right">
                     <a href="<?php echo site_url('hgrepo/browse/' . the_name()); ?>"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon ui-icon-newwin"></span><?php echo lang('hgphp_action_browse'); ?></a>
-                    <a href="<?php echo site_url('hgdir'); ?>" id="dialog_link2_cancel"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_cancel'); ?></a>
-                    <a href="<?php echo site_url('hgrepo/manage/' . the_name()); ?>" id="dialog_link2_reset"
-                       class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_reset'); ?></a>
-                    <a href="#" id="dialog_link2_save" class="ui-state-default ui-corner-all dialog_link"><span
-                                class="ui-icon"></span><?php print lang('hgphp_action_save'); ?></a>
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-link"></span> Browse
+                    </a>
+                    <a href="<?php echo site_url('hgdir'); ?>" id="dialog_link_cancel"
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-times"></span> Cancel
+                    </a>
+                    <a href="<?php echo site_url('hgrepo/manage/' . the_name()); ?>" id="dialog_link_reset"
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-trash"></span> Reset
+                    </a>
+                    <a href="#" id="dialog_link_save"
+                       class="btn btn-default">
+                        <span class="fa fa-fw fa-save"></span> Save
+                    </a>
                 </p>
             </td>
         </tr>
-</table>
+    </table>
+</form>
 <div id="dialog_save" class="dialog" title="<?php echo lang('hgphp_action_save'); ?>">
     <?php echo lang('hgphp_dialog_repo_save'); ?>
 </div>

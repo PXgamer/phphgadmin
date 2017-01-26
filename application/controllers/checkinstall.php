@@ -1,8 +1,7 @@
 <?php
 
-class Checkinstall extends CI_Controller
+class checkinstall extends CI_Controller
 {
-
     public $checks = array(
 
         /* base url, htaccess redirects, e-mailer set up, */
@@ -57,16 +56,16 @@ class Checkinstall extends CI_Controller
         if ($t_result) {
             $status_cell = '<td width=50 style="color:green" align=center>OK</td><td width="500"></td>';
         } else {
-            $status_cell = '<td width=50 align=center valign=top><span style="color:white;background:red;padding:3px;"><b>FAIL</b></span></td><td width="500" valign=top><font size=-1>' . $t_config['msg_fail'] . '</font></td>';
+            $status_cell = '<td width=50 align=center valign=top><span style="color:white;background:red;padding:3px;"><b>FAIL</b></span></td><td width="500" valign=top><font size=-1>'.$t_config['msg_fail'].'</font></td>';
         }
 
-        return "<tr><td width=150 valign=top><b>$t_name</b></td><td width=200 valign=top><font size=-1>" . $t_config['description'] . "</font></td>$status_cell</tr>";
+        return "<tr><td width=150 valign=top><b>$t_name</b></td><td width=200 valign=top><font size=-1>".$t_config['description']."</font></td>$status_cell</tr>";
     }
 
     private function test_sitename()
     {
-        return (!empty($this->config->item('base_url')) && stripos($this->config->item('base_url'),
-                '127.0.0.1') === false);
+        return !empty($this->config->item('base_url')) && stripos($this->config->item('base_url'),
+                '127.0.0.1') === false;
     }
 
     private function test_htaccess()
@@ -77,7 +76,8 @@ class Checkinstall extends CI_Controller
     private function test_default_profile()
     {
         $default_profile = $this->config->item('default_profile');
-        return (!empty($default_profile) && isset($this->config->item('profile')[$default_profile]));
+
+        return !empty($default_profile) && isset($this->config->item('profile')[$default_profile]);
     }
 
     private function test_writetemp()
@@ -89,7 +89,6 @@ class Checkinstall extends CI_Controller
     {
         return $this->config->item('global_allow_repo_view') && $this->config->item('global_allow_repo_create') && $this->config->item('global_allow_repo_update') && $this->config->item('global_allow_repo_delete');
     }
-
 
     private function test_writehgwebdir($r_name)
     {
@@ -109,7 +108,7 @@ class Checkinstall extends CI_Controller
     <table width="100%">
         <tr>
             <td width="170"><b>PHP version</b></td>
-            <td>' . phpversion() . '</td>
+            <td>'.phpversion().'</td>
         </tr>
         <tr>
             <td width="170"><b>Apache version</b></td>
@@ -126,9 +125,9 @@ class Checkinstall extends CI_Controller
 </fieldset>';
 
         foreach ($this->checks as $category => $tests) {
-            $view .= '<fieldset><legend>' . ($category ?? '') . '</legend><table width="100%">';
+            $view .= '<fieldset><legend>'.($category ?? '').'</legend><table width="100%">';
             foreach ($tests as $t_name => $test) {
-                $t_result = call_user_func('self::test_' . $t_name);
+                $t_result = call_user_func('self::test_'.$t_name);
                 $view .= $this->table_result($t_name, $test, $t_result);
             }
             $view .= '</table></fieldset>';

@@ -4,7 +4,7 @@
         <tr>
             <td colspan="3" align="right">
                 <p>
-                    <a href="<?php echo site_url('hgrepo/manage/' . the_name()); ?>"
+                    <a href="<?php echo site_url('hgrepo/manage/'.the_name()); ?>"
                        class="ui-state-default ui-corner-all dialog_link"><span
                                 class="ui-icon"></span><?php echo lang('hgphp_action_update_config'); ?></a>
                 </p>
@@ -23,7 +23,7 @@
         <tr>
             <td colspan="3" align="right">
                 <p>
-                    <a href="<?php echo site_url('hgrepo/manage/' . the_name()); ?>"
+                    <a href="<?php echo site_url('hgrepo/manage/'.the_name()); ?>"
                        class="ui-state-default ui-corner-all dialog_link"><span
                                 class="ui-icon"></span><?php echo lang('hgphp_action_update_config'); ?></a>
                 </p>

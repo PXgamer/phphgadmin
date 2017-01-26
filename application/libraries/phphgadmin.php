@@ -1,6 +1,6 @@
 <?php
 
-class phpHgAdmin
+class phphgadmin
 {
     private $_ci;
     private $_ofl_lock_hgweb;
@@ -9,7 +9,7 @@ class phpHgAdmin
     private $_profile;
     private $_cache;
 
-    function __construct()
+    public function __construct()
     {
         $this->_ci = &get_instance();
         $this->_ci->load->library('Hg_Filesystem');
@@ -18,38 +18,24 @@ class phpHgAdmin
         $this->flush_cache();
     }
 
-    function start_tx(&$ofl_lock_hgweb, &$ofl_lock_hgrc)
-    {
-        $this->_ofl_lock_hgweb = &$ofl_lock_hgweb;
-        $this->_ofl_lock_hgrc = &$ofl_lock_hgrc;
-    }
-
-    function end_tx()
-    {
-        $dummy = '';
-        $this->_ofl_lock_hgweb = &$dummy;
-        $this->_ofl_lock_hgrc = &$dummy;
-    }
-
-    function set_profile($profile = null)
+    public function set_profile($profile = null)
     {
         $this->_profile = $profile;
         $this->flush_cache();
     }
 
-    function get_profile()
+    public function get_profile()
     {
         return $this->_profile;
     }
 
-    function flush_cache()
+    public function flush_cache()
     {
         $this->_cache = array();
     }
 
-    function lsdir()
+    public function lsdir()
     {
-
         $webdir = $this->get_profile();
 
         if (isset($this->_cache['lsdir'])) {
@@ -76,7 +62,6 @@ class phpHgAdmin
         $allrepo = $realdir;
         $allrepo = array_merge($realdir, $hgwebrepos);
 
-
         $hgrepos = array();
         foreach ($allrepo as $repo) {
             $hgrepos[$repo]['name'] = $repo;
@@ -95,16 +80,19 @@ class phpHgAdmin
         }
 
         $this->_cache['lsdir'] = $hgrepos;
+
         return $hgrepos;
     }
 
     /**
      * stat_repository
-     * Returns the HGRC represented as an array for the specified repository
+     * Returns the HGRC represented as an array for the specified repository.
+     *
      * @param r_name name of the project whose hgrc to retrieve
+     *
      * @return array representing hgrc or status code
      */
-    function stat_repository($r_id)
+    public function stat_repository($r_id)
     {
         if (!$this->can_view($r_id)) {
             return HGPHP_ERR_PERM_USR;
@@ -117,10 +105,11 @@ class phpHgAdmin
         }
 
         $this->_ci->hg_ini->register_OFL($this->_ofl_lock_hgrc);
+
         return $this->_ci->hg_ini->loadHgRC($r_id, $profile);
     }
 
-    function create_repository($r_name)
+    public function create_repository($r_name)
     {
         $profile = $this->get_profile();
 
@@ -146,7 +135,6 @@ class phpHgAdmin
                 $create_status = $this->_ci->hg_filesystem->create_repository_dir($r_name, $profile);
 
                 if ($create_status == HGPHP_OK) {
-
                     $create_status = $this->_ci->hg_ini->touchHgRC($r_name, $profile);
                 }
             }
@@ -155,18 +143,19 @@ class phpHgAdmin
             $create_status = HGPHP_ERR_FS_PREEXISTS;
         }
 
-
         return $create_status;
     }
 
     /**
      * update_repository
-     * Update repository's hgrc
+     * Update repository's hgrc.
+     *
      * @param r_name name of the repository to update hgrc for
      * @param hgrc_data array representing new hgrc file
+     *
      * @return status code
      */
-    function update_repository($r_name, $hgrc_data)
+    public function update_repository($r_name, $hgrc_data)
     {
         $profile = $this->get_profile();
 
@@ -176,16 +165,19 @@ class phpHgAdmin
         $this->_ci->hg_ini->register_OFL($this->_ofl_lock_hgrc);
 
         $this->flush_cache();
+
         return $this->_ci->hg_ini->saveHgRC($r_name, $hgrc_data, $profile);
     }
 
     /**
      * delete_repository
-     * Deletes a repository from the file system and unregisters it from hgweb.config
+     * Deletes a repository from the file system and unregisters it from hgweb.config.
+     *
      * @param r_key id of the repo to delete permanently
+     *
      * @return status code
      */
-    function delete_repository($r_key)
+    public function delete_repository($r_key)
     {
         $hgweb = $this->get_profile();
 
@@ -212,6 +204,7 @@ class phpHgAdmin
             $del_status = HGPHP_ERR_FS_PREEXISTS;
         }
         $this->flush_cache();
+
         return $del_status;
     }
 
@@ -219,48 +212,54 @@ class phpHgAdmin
      * can_create
      * Checks if user has permissions to create this repository.
      * Requires view permission.
+     *
      * @param r_name name of repository wanting to be created
+     *
      * @return true if allowed
      */
-    function can_create($r_name)
+    public function can_create($r_name)
     {
-        return $this->_ci->config->item('global_allow_repo_create') && $this->_ci->auth->auth_user_can_create($r_name);
+        return $this->_ci->config->item('global_allow_repo_create');
     }
 
     /**
      * can_update
      * Checks if user has permissions to update this repository
      * Requires view permission.
+     *
      * @param r_name name of repository wanting to be updated
+     *
      * @return true if allowed
      */
-    function can_update($r_name)
+    public function can_update($r_name)
     {
-        return $this->_ci->config->item('global_allow_repo_update') && $this->_ci->auth->auth_user_can_update($r_name);
+        return $this->_ci->config->item('global_allow_repo_update');
     }
 
     /**
      * can_create
-     * Checks if user has permissions to view this repository
+     * Checks if user has permissions to view this repository.
+     *
      * @param r_name name of repository wanting to be created
+     *
      * @return true if allowed
      */
-    function can_view($r_name)
+    public function can_view($r_name)
     {
-        return $this->_ci->config->item('global_allow_repo_view') && $this->_ci->auth->auth_user_can_view($r_name);
+        return $this->_ci->config->item('global_allow_repo_view');
     }
 
     /**
      * can_delete
      * Checks if user has permissions to delete this repository
      * Requires view permission.
+     *
      * @param r_name name of repository wanting to be deleted
+     *
      * @return true if allowed
      */
-    function can_delete($r_name)
+    public function can_delete($r_name)
     {
-        return $this->_ci->config->item('global_allow_repo_delete') && $this->_ci->auth->auth_user_can_delete($r_name);
+        return $this->_ci->config->item('global_allow_repo_delete');
     }
-
-
 }

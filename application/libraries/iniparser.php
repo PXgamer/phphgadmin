@@ -1,20 +1,24 @@
-<?php if (!defined('BASEPATH')) {
+<?php
+
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class IniParser
 {
-
     /**
      * Mimics PHP's function call of similar name.
      * This one has a built-in compatibility layer which should ensure
      * most ini files are readable.
+     *
      * @param
+     *
      * @return ini64 an ini64 object representing the ini file
+     *
      * @see http://ca2.php.net/manual/en/function.parse-ini-string.php
      * FIXME process_sections
      */
-    function parse_ini_string_base64($ini, $process_sections = false)
+    public function parse_ini_string_base64($ini, $process_sections = false)
     {
         $lines = explode("\n", $ini);
         $ini_arr = array();
@@ -45,13 +49,14 @@ class IniParser
                 $ini_arr[$hashkey] = $value;
             }
         }
+
         return new ini64($ini_arr, true);
     }
 
     /**
-     * Mimics PHP's function call of similar name
+     * Mimics PHP's function call of similar name.
      */
-    function parse_ini_file_base64($filename, $process_sections = false)
+    public function parse_ini_file_base64($filename, $process_sections = false)
     {
         if (is_readable($filename)) {
             $ini = @file_get_contents($filename);
@@ -59,6 +64,7 @@ class IniParser
                 return $this->parse_ini_string_base64($ini, $process_sections);
             }
         }
+
         return false;
     }
 }
@@ -71,7 +77,7 @@ class ini64
 {
     private $_values;
 
-    function __construct($values, $prehashed = false)
+    public function __construct($values, $prehashed = false)
     {
         if ($prehashed) {
             $this->_values = $values;
@@ -92,9 +98,9 @@ class ini64
         }
     }
 
-    function keys($collection = null)
+    public function keys($collection = null)
     {
-        $hashkeys;
+        $hashkeys = [];
         if ($collection != null) {
             $hashcollection = base64_encode($collection);
             $hashkeys = array_keys($this->_values[$hashcollection]);
@@ -105,22 +111,24 @@ class ini64
         foreach ($hashkeys as $hashkey) {
             $keys[] = base64_decode($hashkey);
         }
+
         return $keys;
     }
 
-    function get($key = null, $collection = null)
+    public function get($key = null, $collection = null)
     {
         if ($key != null) {
             $hashkey = base64_encode($key);
 
             if ($collection != null) {
                 $hashcollection = base64_encode($collection);
-                return $this->_values[$hashcollection][$hashkey]; // FIXME isset check
+
+                return $this->_values[$hashcollection][$hashkey] ?? redirect('/hgdir'); // FIXME isset check
             } else {
                 if (isset($this->_values[$hashkey])) {
                     return $this->_values[$hashkey];
                 } else {
-                    return null;
+                    return;
                 }
             }
         } else {
@@ -128,7 +136,7 @@ class ini64
         }
     }
 
-    function set($key, $val, $collection = null)
+    public function set($key, $val, $collection = null)
     {
         $hashkey = base64_encode($key);
         if ($collection != null) {
@@ -139,7 +147,7 @@ class ini64
         }
     }
 
-    function unsetKey($hashkey, $collection = null, $pre_hashed = false)
+    public function unsetKey($hashkey, $collection = null, $pre_hashed = false)
     {
         if (!$pre_hashed) {
             $hashkey = base64_encode($hashkey);
@@ -153,7 +161,7 @@ class ini64
         }
     }
 
-    function toString()
+    public function toString()
     {
         // generate ini string
         $ini = '';
@@ -163,17 +171,18 @@ class ini64
 
                 if (is_array($collection_val)) {
                     // section header
-                    $ini .= "\n[" . $collection_name . ']';
+                    $ini .= "\n[".$collection_name.']';
 
                     foreach ($collection_val as $hashkey_name => $key_val) {
                         $key_name = base64_decode($hashkey_name);
-                        $ini .= "\n" . $key_name . ' = ' . $key_val;
+                        $ini .= "\n".$key_name.' = '.$key_val;
                     }
                 } else {
-                    $ini .= "\n" . $collection_name . ' = ' . $collection_val;
+                    $ini .= "\n".$collection_name.' = '.$collection_val;
                 }
             }
         }
+
         return $ini;
     }
 }

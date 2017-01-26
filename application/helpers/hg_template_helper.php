@@ -7,12 +7,12 @@ function theme_name()
 
 function is_directory()
 {
-    return get_phphginfo('pagetype') === 'directory';
+    return get_phphginfo('pagetype') == 'directory';
 }
 
 function is_repo_config()
 {
-    return get_phphginfo('pagetype') === 'config';
+    return get_phphginfo('pagetype') == 'config';
 }
 
 function is_repo_browser()
@@ -40,11 +40,6 @@ function user_errors()
     phphginfo('user_err');
 }
 
-function the_title()
-{
-    phphginfo('title');
-}
-
 function phphginfo($item)
 {
     echo get_phphginfo($item);
@@ -52,9 +47,7 @@ function phphginfo($item)
 
 function get_phphginfo($item)
 {
-    $ci =& get_instance();
-    if (isset($ci->load->_ci_cached_vars[$item])) {
-        return $ci->load->_ci_cached_vars[$item];
-    }
-    return false;
+    $ci = &get_instance();
+
+    return $ci->load->get_var($item) ?? false;
 }
