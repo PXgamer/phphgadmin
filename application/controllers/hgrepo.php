@@ -20,8 +20,9 @@ class hgrepo extends CI_Controller
             return;
         }
 
-        $this->load->vars(array('title' => $repositoryName . '@' . current_profile() . ' | ' . HGPHP_NAME));
-        $this->load->vars(array('pagetype' => 'browser'));
+        $title = $repositoryName . '@default | ' . HGPHP_NAME;
+
+        $this->load->vars(['title' => $title, 'pagetype' => 'browser']);
 
         $view = $this->load->view('index', [], true);
         $this->load->view('include/template', ['view' => $view]);
