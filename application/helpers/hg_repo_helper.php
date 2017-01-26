@@ -49,8 +49,8 @@ function the_section()
     $has_section = has_sections();
 
     if ($has_section) {
-        $_section_hashname = $_section_iter_keys[$_section_iter_count];
-        $_items = $_sections[$_section_hashname];
+        $_section_hashname = $_section_iter_keys[$_section_iter_count] ?? null;
+        $_items = $_sections[$_section_hashname] ?? [];
         $_item_iter_keys = array_keys($_items);
         $_section_iter_count += 1;
     }

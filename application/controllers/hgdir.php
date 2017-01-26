@@ -64,9 +64,7 @@ class hgdir extends CI_Controller
             if ($r_name == $blacklist) {
                 $this->load->vars(array('user_err' => lang('hgphp_msg_hgwebconf_create_err_blacklistname')));
             } else {
-                $this->phphgadmin->start_tx($this->ofl_lock_hgwebconf, $dummy = '');
                 $action_status = $this->phphgadmin->create_repository($r_name);
-                $this->phphgadmin->end_tx();
 
                 switch ($action_status) {
                     case HGPHP_OK:
@@ -103,9 +101,7 @@ class hgdir extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->vars(array('user_err' => lang('hgphp_msg_hgwebconf_delete_err_unspecified_name')));
         } else {
-            $this->phphgadmin->start_tx($this->ofl_lock_hgwebconf, $dummy = '');
             $action_status = $this->phphgadmin->delete_repository($r_name);
-            $this->phphgadmin->end_tx();
 
             switch ($action_status) {
                 case HGPHP_OK:

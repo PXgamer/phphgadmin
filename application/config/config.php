@@ -13,10 +13,29 @@ $config['base_url'] = 'http://localhost/';
 define('HGPHP_NAME', 'HGPHP');
 define('HGPHP_VERSION', 'v1.0.0');
 
+$config['default_hgrc']['general'] = [
+    'paths' => [
+        'default' => '%1$s%2$s'
+    ],
+    'web' => [
+        'name' => '%2$s',
+        'allow_archive' => '',
+        'allow_push' => '',
+        'allowpull' => '',
+        'allow_read' => '',
+        'contact' => '',
+        'description' => '',
+        'push_ssl' => '',
+        'style' => '',
+    ]
+];
+
 // Default Profile Config
 $config['default_profile'] = 'default';
 $config['profile']['default']['ini'] = 'hgweb.config';
 $config['profile']['default']['default_repo_dir'] = 'repositories/';
+$config['profile']['default']['hgserve_url'] = 'http://localrepos/hgweb.cgi';
+$config['profile']['default']['default_hgrc'] = $config['default_hgrc']['general'];
 $config['lock_dir'] = 'application/tmp/';
 
 // Global Allow Permissions
