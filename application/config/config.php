@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /* ------------------------ */
 
@@ -23,6 +24,7 @@ $config['global_allow_repo_create'] = true;
 $config['global_allow_repo_update'] = true;
 $config['global_allow_repo_view'] = true;
 $config['global_allow_repo_delete'] = true;
+$config['lock_ofl_index'] = 'ofl_index.dat';
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ $config['global_allow_repo_delete'] = true;
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
