@@ -48,7 +48,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="create_modal">
     <div class="modal-dialog" role="document">
-        <form action="<?php echo site_url('hgdir'); ?>" method="post" id="form_create" name="form_create">
+        <form action="<?= site_url('hgdir'); ?>" method="post" id="form_create" name="form_create">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -72,7 +72,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="delete_modal">
     <div class="modal-dialog" role="document">
-        <form action="<?php echo site_url('hgdir'); ?>" method="post" id="form_delete" name="form_delete">
+        <form action="<?= site_url('hgdir'); ?>" method="post" id="form_delete" name="form_delete">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -80,16 +80,17 @@
                     <h4 class="modal-title">Delete Repository</h4>
                 </div>
                 <div class="modal-body">
-                    <table style="width: 100%">
+                    <table class="table">
                         <tr>
                             <td>
                                 <input type="hidden" name="form_action" value="delete_repository"/>
                                 <label for="form_delete_name">Repository to Delete</label>
-                                <select style="width:100%" name="form_delete_name" id="form_delete_name">
+                                <select class="form-control" name="form_delete_name" id="form_delete_name">
                                     <option selected="selected" value=""></option>
-                                    <?php while (have_repos()): the_repo(); ?>
-                                        <option value="<?php echo repo_name(); ?>"><?php echo repo_name(); ?></option>
-                                    <?php endwhile; ?>
+                                    <?php while (have_repos()) {
+                                        the_repo(); ?>
+                                        <option value="<?= repo_name(); ?>"><?= repo_name(); ?></option>
+                                    <?php } ?>
                                 </select>
                                 <br/>
                             </td>
