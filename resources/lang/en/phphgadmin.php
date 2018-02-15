@@ -1,0 +1,68 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | PhpHgAdmin Language Lines
+    |--------------------------------------------------------------------------
+    */
+
+    'title_repo'                                => 'Repository Name',
+    'title_repodir'                             => 'Path',
+    'title_status'                              => 'Status',
+    'title_configkey'                           => 'Config Key',
+    'title_configval'                           => 'Value',
+    'title_adminhome'                           => 'Administration Home',
+    'title_listingshome'                        => 'Mercurial Front-end',
+    'title_help'                                => 'Help',
+    'title_directory'                           => 'Directory',
+    'action_ok'                                 => 'Ok',
+    'action_create'                             => 'Create',
+    'action_delete'                             => 'Delete',
+    'action_save'                               => 'Save',
+    'action_reset'                              => 'Reset',
+    'action_cancel'                             => 'Cancel',
+    'action_browse'                             => 'Browse',
+    'action_reload'                             => 'Reload configuration',
+    'action_update_config'                      => 'Update configuration',
+    'dialog_repo_create'                        => 'Enter a new repository name: ',
+    'dialog_repo_save'                          => 'Saving will immediately put the changes into effect.',
+    'dialog_repo_delete'                        => 'Deleting a repository cannot be undone. Choose a repository to be removed: ',
+    'repostatus_enabled'                        => 'Enabled',
+    'repostatus_missing'                        => 'Missing',
+    'repostatus_disabled'                       => 'Disabled',
+    'msg_hgwebconf_read_err_absdirs'            => 'Problem scanning repository directory. Check configuration paths to hgweb.config and the repositories and that the server has write permissions to both.',
+    'msg_hgwebconf_create_success'              => 'Repository created successfully.',
+    'msg_hgwebconf_create_err_validname'        => 'Creating a repository requires a valid name:<li>contains only alpha-numerics, dashes or underscores<li>between 1 and 255 characters long.',
+    'msg_hgwebconf_create_err_blacklistname'    => 'Creating a repository name cannot match the path reserved for Hg-PHP.',
+    'msg_hgwebconf_create_err_permuser'         => 'Repository could not be created; insufficient user privileges.',
+    'msg_hgwebconf_create_err_permsys'          => 'Repository could not be created; insufficient server privileges.',
+    'msg_hgwebconf_create_err_preexists'        => 'Repository could not be created; it already exists.',
+    'msg_hgwebconf_create_err_locking'          => 'Could not complete creation.<br />Configuration had been modified since last loaded.',
+    'msg_hgwebconf_delete_success'              => 'Repository deleted successfully.',
+    'msg_hgwebconf_delete_err_permuser'         => 'Repository could not be deleted; insufficient user privileges.',
+    'msg_hgwebconf_delete_err_unspecified_name' => 'Deleting a repository requires specifying an existing entry.',
+    'msg_hgwebconf_delete_err_permsys'          => 'Repository could not be deleted; insufficient server privileges.',
+    'msg_hgwebconf_delete_err_preexists'        => 'Repository could not be deleted; it has already been removed.',
+    'msg_hgwebconf_delete_err_locking'          => 'Could not complete deletion.<br />Configuration had been modified since last loaded.',
+    'msg_hgrc_save_success'                     => 'Repository configuration successfully saved.',
+    'msg_hgrc_save_err_locking'                 => 'Could not complete update.<br />Configuration had been modified since last loaded.',
+    'msg_hgrc_save_err_validation'              => 'Repository configuration can only contain alphanumerics or the following characters: ',
+    'msg_hgrc_read_err'                         => 'Repository configuration could not be found or contains invalid characters and cannot be displayed. Contact your repository administrator to fix this issue.',
+    'msg_hgrc_save_err_notfound'                => 'Repository configuration could not be found.',
+    'msg_err'                                   => 'Alert',
+    'msg_unknown_err'                           => 'An error prevented the action from completing: ',
+    'doclink_hgrc'                              => 'https://www.selenic.com/mercurial/hgrc.5.html#',
+    'tooltip_hgrc_paths_default'                => 'Directory or URL to use when pulling if no source is specified.',
+    'tooltip_hgrc_web_allow_archive'            => 'List of archive format (bz2, gz, zip) allowed for downloading.',
+    'tooltip_hgrc_web_allow_push'               => 'Whether to allow pushing to the repository. If empty, push is not allowed. If the special value *, any remote user can push, including unauthenticated users. Otherwise, the remote user must have been authenticated, and the authenticated user name must be present in this list (separated by whitespace or ,).',
+    'tooltip_hgrc_web_allowpull'                => 'Whether to allow pulling from the repository.',
+    'tooltip_hgrc_web_allow_read'               => 'This list determines whether to grant repository access to the user. If this list is not empty, and the user is unauthenticated or not present in the list (separated by whitespace or ,), then access is denied for the user. If the list is empty or not set, then access is permitted to all users by default.',
+    'tooltip_hgrc_web_contact'                  => 'Name or email address of the person in charge of the repository. Defaults to ui.username or $EMAIL or "unknown" if empty.',
+    'tooltip_hgrc_web_description'              => 'Textual description of the repository\'s purpose or contents. Default is "unknown" if unset.',
+    'tooltip_hgrc_web_name'                     => 'Repository name to use in the web interface. Default is current working directory.',
+    'tooltip_hgrc_web_push_ssl'                 => 'Whether to require that inbound pushes be transported over SSL to prevent password sniffing. If using http authentication, must be FALSE.',
+    'tooltip_hgrc_web_style'                    => 'Which template map style to use. Examples: paper (default), coal, gitweb, monoblue, spartan. Also atom, rss.',
+
+];
